@@ -10,8 +10,7 @@ ACTIVE_SINK_NAME=$(pactl list short sinks | grep ^"$ACTIVE_SINK_ID" | awk '{prin
 ACTIVE_ARRAY_INDEX=$(echo ${SINKS_TO_SWITCH[@]/$ACTIVE_SINK_NAME//} | cut -d/ -f1 | wc -w | tr -d ' ')
 
 #get next element in array
-NEXT_ARRAY_INDEX=$(($ACTIVE_ARRAY_INDEX+1))
-NEXT_ARRAY_INDEX=$(($NEXT_ARRAY_INDEX%$SINK_ELEMENTS))
+NEXT_ARRAY_INDEX=$((($ACTIVE_ARRAY_INDEX+1)%$SINK_ELEMENTS))
 NEXT_SINK_NAME=${SINKS_TO_SWITCH[$NEXT_ARRAY_INDEX]}
 NEXT_SINK_ID=$(pactl list short sinks | grep $NEXT_SINK_NAME | awk '{print $1}')
 

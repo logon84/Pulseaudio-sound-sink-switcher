@@ -12,8 +12,7 @@ ACTIVE_ARRAY_INDEX=$(echo ${SINKS_TO_SWITCH[@]/$ACTIVE_SINK_NAME//} | cut -d/ -f
 #get next element in array
 NEXT_ARRAY_INDEX=$((($ACTIVE_ARRAY_INDEX+1)%$SINK_ELEMENTS))
 NEXT_SINK_NAME=${SINKS_TO_SWITCH[$NEXT_ARRAY_INDEX]}
-NEXT_SINK_ID=$(pactl list short sinks | grep $NEXT_SINK_NAME | awk '{print $1}')
 
 #switch to sink
-pacmd set-default-sink $NEXT_SINK_ID
+pacmd set-default-sink $NEXT_SINK_NAME
 notify-send AudioSwitch "Switching to $NEXT_SINK_NAME"

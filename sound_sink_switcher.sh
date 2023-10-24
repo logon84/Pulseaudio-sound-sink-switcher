@@ -7,8 +7,6 @@ SINK_ELEMENTS=$(echo ${#SINKS_TO_SWITCH[@]})
 #get current sink
 ACTIVE_SINK_ID=$(pacmd info | sed -n '/sink(/,/source(/p' | grep '*' | awk '{print $3}')
 ACTIVE_SINK_NAME=$(pactl list short sinks | grep ^"$ACTIVE_SINK_ID" | awk '{print $2}')
-
-#get active sink array index
 ACTIVE_ARRAY_INDEX=$(echo ${SINKS_TO_SWITCH[@]/$ACTIVE_SINK_NAME//} | cut -d/ -f1 | wc -w | tr -d ' ')
 
 #get next element in array

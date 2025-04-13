@@ -26,13 +26,13 @@ NEXT_SINK_ID=$(pactl list short sinks | grep $NEXT_SINK_NAME | awk '{print $1}')
 
 #switch to sink
 pacmd set-default-sink $NEXT_SINK_ID
-$(gdbus call --session \
+out=$(gdbus call --session \
              --dest org.freedesktop.Notifications \
              --object-path /org/freedesktop/Notifications \
              --method org.freedesktop.Notifications.CloseNotification \
-             "$(</tmp/sss.id)")
+             "$(cat /tmp/sss.id 2>/dev/null)" 2>/dev/null)
 ALIAS=$(echo -e $ALIASES | grep $NEXT_SINK_NAME | awk -F ':' '{print ($2)}')
-$(gdbus call --session \
+out=$(gdbus call --session \
              --dest org.freedesktop.Notifications \
              --object-path /org/freedesktop/Notifications \
              --method org.freedesktop.Notifications.Notify sss \
